@@ -20,3 +20,8 @@ invalidInput:
 	li $v0, 4
 	la $a0, newLine
 	syscall
+
+    #prints "Invalid input"
+	li $v0, 4
+	la $a0, notValid
+	syscall
