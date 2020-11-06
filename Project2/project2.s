@@ -25,3 +25,8 @@ invalidInput:
 	li $v0, 4
 	la $a0, notValid
 	syscall
+    j Exit
+
+exit:
+	li $v0, 10
+	syscall
