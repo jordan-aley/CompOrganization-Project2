@@ -86,6 +86,16 @@ lowercase:
 	mul $t3, $t3, $t7
 	j fix
 
+convert:
+	la $t0, input
+	add $t0, $t0, $t6
+	lb $s0, ($t0)
+	addi $t2, $t2, -1
+	addi $t6, $t6, 1
+	blt $t2, 0, done
+	move $t8, $t2
+	j sort
+
 invalidInput:
     #produces output
 	li $v0, 4
