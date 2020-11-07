@@ -15,6 +15,15 @@ main:
 	li $a1, 1001
 	syscall
 
+before:
+	la $t0, input
+	add $t0, $t0, $t1
+	lb $s0, ($t0)
+	beq $s0, 0, convert
+	beq $s0, 9, skipSpace
+	beq $s0, 32, skipSpace
+	move $t6, $t1
+
 invalidInput:
     #produces output
 	li $v0, 4
@@ -25,7 +34,7 @@ invalidInput:
 	li $v0, 4
 	la $a0, notValid
 	syscall
-    j Exit
+    j exit
 
 exit:
 	li $v0, 10
