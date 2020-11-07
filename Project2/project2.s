@@ -77,6 +77,15 @@ uppercase:
 	mul $t3, $t3, $t7
 	j fix
 
+lowercase:
+	ble $s0, 96, notchar
+	addi $t1, $t1, 1
+	addi $t2, $t2, 1
+	li $t5, 87
+	sub $s0, $s0, $t5
+	mul $t3, $t3, $t7
+	j fix
+
 invalidInput:
     #produces output
 	li $v0, 4
