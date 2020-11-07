@@ -101,6 +101,8 @@ sort:
 	ble $s0, 86, up
 	ble $s0, 118, low
 
+done: jr $ra
+
 invalidInput:
     #produces output
 	li $v0, 4
