@@ -63,6 +63,10 @@ int:
 	ble $s0, 47, notchar
 	addi $t1, $t1, 1
 	addi $t2, $t2, 1
+	li $t5, 48
+	sub $s0, $s0, $t5
+	mul $t3, $t3, $t7
+	j fix
 
 invalidInput:
     #produces output
