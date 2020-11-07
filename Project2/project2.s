@@ -25,6 +25,16 @@ parse:
 	beq $s0, 9, skipSpace
 	beq $s0, 32, skipSpace
 	move $t6, $t1
+	j fix
+
+fix:
+	li $t7, -1
+	la $t0, input
+	add $t0,$t0,$t1
+	lb $s0, ($t0)
+	bge $t2, 5, invalidInput
+	bge $t3, 1, invalidInput
+	j check
 
 skipSpace:
 	addi $t1, $t1,1
