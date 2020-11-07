@@ -125,6 +125,12 @@ lower:
 	li $t9, 30
 	j exp
 
+exp:
+	ble $t8, 1, merge
+	mul $t9, $t9, 30 
+	addi $t8, $t8, -1
+	j exp
+
 done: jr $ra
 
 invalidInput:
