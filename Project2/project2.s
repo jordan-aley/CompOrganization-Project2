@@ -2,30 +2,30 @@
     #user input
 	input: .space 1001
     #makes new line
-	newLine: .asciiz "\n"
+	output: .asciiz "\n"
     #prints if output is not valid
-	notValid: .asciiz "Invalid input"
+	notvalid: .asciiz "Invalid input"
 
 .text
 
 main:
 	#asks for input
 	li $v0, 8
-	la $a0, input
+	la $a0, data
 	li $a1, 1001
 	syscall
-	jal parse
+	jal before
 	j finish
 
-parse:
-	la $t0, input
-	add $t0, $t0, $t1
+before:
+	la $t0,data
+	add $t0,$t0,$t1
 	lb $s0, ($t0)
 	beq $s0, 0, convert
-	beq $s0, 9, skipSpace
-	beq $s0, 32, skipSpace
+	beq $s0, 9, skip
+	beq $s0, 32, skip
 	move $t6, $t1
-	j fix
+	j during
 
 skipSpace:
 	addi $t1, $t1,1
@@ -106,7 +106,7 @@ num:
 	sub $s0, $s0, $t5
 	li $t9, 1
 	beq $t2, 0, merge
-	li $t9, 30
+	li $t9, 32
 	j exp
 
 up:
@@ -114,7 +114,7 @@ up:
 	sub $s0, $s0, $t5
 	li $t9, 1
 	beq $t2, 0, merge
-	li $t9, 30
+	li $t9, 32
 	j exp
 
 lower:
@@ -122,12 +122,12 @@ lower:
 	sub $s0, $s0, $t5
 	li $t9, 1
 	beq $t2, 0, merge
-	li $t9, 30
+	li $t9, 32
 	j exp
 
 exp:
 	ble $t8, 1, merge
-	mul $t9, $t9, 30 
+	mul $t9, $t9, 32
 	addi $t8, $t8, -1
 	j exp
 
@@ -141,7 +141,7 @@ done: jr $ra
 
 finish:
 	li $v0, 4
-	la $a0, newLine
+	la $a0, output
 	syscall
 
 	li $v0, 1
@@ -153,12 +153,12 @@ finish:
 invalidInput:
     #produces output
 	li $v0, 4
-	la $a0, newLine
+	la $a0, output
 	syscall
 
     #prints "Invalid input"
 	li $v0, 4
-	la $a0, notValid
+	la $a0, notvalid
 	syscall
     j Exit
 
