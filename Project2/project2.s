@@ -27,64 +27,71 @@ before:
 	move $t6, $t1
 	j during
 
-skipSpace:
+skip:
 	addi $t1, $t1,1
-	j parse
+	j before
 
-fix:
+during:
 	li $t7, -1
-	la $t0, input
+	la $t0,data
 	add $t0,$t0,$t1
 	lb $s0, ($t0)
-	bge $t2, 5, invalidInput
-	bge $t3, 1, invalidInput
+	bge $t2, 5, invalid
+	bge $t3, 1, invalid
 	j check
 
 check:
 	beq $s0, 0, convert
-	ble $s0, 47, notchar
-	ble $s0, 57, int
-	ble $s0, 86, uppercase
+	ble $s0, 47, special
+	ble $s0, 57, integer
+	ble $s0, 86, capital
 	ble $s0, 118, lowercase
-	bge $s0, 119, notchar
+	bge $s0, 119, special
 
-notchar:
+special:
 	addi $t1,$t1, 1
-	beq $s0, 9,  shift
-	beq $s0, 32, shift
+	beq $s0, 9,  gap
+	beq $s0, 32, gap
 	beq $s0, 10, convert
-	j invalidInput
+	j invalid
 
-shift:
+gap:
 	addi $t3,$t3, -1
-	j fix
+	j during			
 
-int:
-	ble $s0, 47, notchar
+integer:
+	ble $s0, 47, special
 	addi $t1, $t1, 1
-	addi $t2, $t2, 1
+	addi $t2, $t2, 1	
+	
 	li $t5, 48
 	sub $s0, $s0, $t5
-	mul $t3, $t3, $t7
-	j fix
 
-uppercase:
-	ble $s0, 64, notchar
+	mul $t3, $t3, $t7
+	j during
+
+capital:
+	ble $s0, 64, special
 	addi $t1, $t1, 1
 	addi $t2, $t2, 1
+	
 	li $t5, 55
 	sub $s0, $s0, $t5
+
 	mul $t3, $t3, $t7
-	j fix
+	
+	j during
 
 lowercase:
-	ble $s0, 96, notchar
+	ble $s0, 96, special
 	addi $t1, $t1, 1
-	addi $t2, $t2, 1
+	addi $t2, $t2, 1	
+	
 	li $t5, 87
 	sub $s0, $s0, $t5
+
 	mul $t3, $t3, $t7
-	j fix
+	j during	
 
 convert:
 	la $t0, input
