@@ -139,6 +139,17 @@ merge:
 
 done: jr $ra
 
+finish:
+	li $v0, 4
+	la $a0, newLine
+	syscall
+
+	li $v0, 1
+	
+	move $a0, $s1
+	syscall
+	j Exit	
+
 invalidInput:
     #produces output
 	li $v0, 4
@@ -149,8 +160,8 @@ invalidInput:
 	li $v0, 4
 	la $a0, notValid
 	syscall
-    j exit
+    j Exit
 
-exit:
+Exit:
 	li $v0, 10
 	syscall
