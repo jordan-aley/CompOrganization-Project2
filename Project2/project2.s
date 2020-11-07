@@ -27,6 +27,10 @@ parse:
 	move $t6, $t1
 	j fix
 
+skipSpace:
+	addi $t1, $t1,1
+	j parse
+
 fix:
 	li $t7, -1
 	la $t0, input
@@ -36,9 +40,13 @@ fix:
 	bge $t3, 1, invalidInput
 	j check
 
-skipSpace:
-	addi $t1, $t1,1
-	j parse
+check:
+	beq $s0, 0, convert
+	ble $s0, 47, notchar
+	ble $s0, 57, int
+	ble $s0, 86, uppercase
+	ble $s0, 118, lowercase
+	bge $s0, 119, notchar
 
 invalidInput:
     #produces output
