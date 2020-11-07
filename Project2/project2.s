@@ -96,6 +96,11 @@ convert:
 	move $t8, $t2
 	j sort
 
+sort:
+	ble $s0, 57, num
+	ble $s0, 86, up
+	ble $s0, 118, low
+
 invalidInput:
     #produces output
 	li $v0, 4
