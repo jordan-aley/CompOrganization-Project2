@@ -117,6 +117,14 @@ up:
 	li $t9, 30
 	j exp
 
+lower:
+	li $t5, 87
+	sub $s0, $s0, $t5
+	li $t9, 1
+	beq $t2, 0, merge
+	li $t9, 30
+	j exp
+
 done: jr $ra
 
 invalidInput:
