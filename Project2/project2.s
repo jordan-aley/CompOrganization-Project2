@@ -48,6 +48,13 @@ check:
 	ble $s0, 118, lowercase
 	bge $s0, 119, notchar
 
+notchar:
+	addi $t1,$t1, 1
+	beq $s0, 9,  shift
+	beq $s0, 32, shift
+	beq $s0, 10, convert
+	j invalidInput
+
 invalidInput:
     #produces output
 	li $v0, 4
