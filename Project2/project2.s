@@ -59,6 +59,11 @@ shift:
 	addi $t3,$t3, -1
 	j fix
 
+int:
+	ble $s0, 47, notchar
+	addi $t1, $t1, 1
+	addi $t2, $t2, 1
+
 invalidInput:
     #produces output
 	li $v0, 4
