@@ -101,6 +101,14 @@ sort:
 	ble $s0, 86, up
 	ble $s0, 118, low
 
+num:
+	li $t5, 48
+	sub $s0, $s0, $t5
+	li $t9, 1
+	beq $t2, 0, merge
+	li $t9, 30
+	j exp
+
 done: jr $ra
 
 invalidInput:
