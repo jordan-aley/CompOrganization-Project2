@@ -105,8 +105,8 @@ convert:
 
 sort:
 	ble $s0, 57, num
-	ble $s0, 84, upper
-	ble $s0, 116, lower
+	ble $s0, 86, upper
+	ble $s0, 118, lower
 
 num:
 	li $t5, 48
