@@ -55,6 +55,10 @@ notchar:
 	beq $s0, 10, convert
 	j invalidInput
 
+shift:
+	addi $t3,$t3, -1
+	j fix
+
 invalidInput:
     #produces output
 	li $v0, 4
