@@ -1,6 +1,6 @@
 .data
     #user input
-	input: .space 1001
+	data: .space 1001
     #makes new line
 	output: .asciiz "\n"
     #prints if output is not valid
@@ -94,59 +94,62 @@ lowercase:
 	j during	
 
 convert:
-	la $t0, input
-	add $t0, $t0, $t6
+	la $t0, data
+	add $t0,$t0,$t6
 	lb $s0, ($t0)
-	addi $t2, $t2, -1
+	addi $t2,$t2, -1
 	addi $t6, $t6, 1
-	blt $t2, 0, done
+	blt $t2,0,done
 	move $t8, $t2
 	j sort
 
 sort:
 	ble $s0, 57, num
-	ble $s0, 86, up
-	ble $s0, 118, low
+	ble $s0, 84, upper
+	ble $s0, 116, lower
 
 num:
 	li $t5, 48
 	sub $s0, $s0, $t5
 	li $t9, 1
-	beq $t2, 0, merge
-	li $t9, 32
+	beq $t2, 0, combine
+	li $t9, 30
 	j exp
 
-up:
+upper:
 	li $t5, 55
 	sub $s0, $s0, $t5
 	li $t9, 1
-	beq $t2, 0, merge
-	li $t9, 32
+	beq $t2, 0, combine
+	li $t9, 30
 	j exp
 
 lower:
 	li $t5, 87
 	sub $s0, $s0, $t5
 	li $t9, 1
-	beq $t2, 0, merge
-	li $t9, 32
+	beq $t2, 0, combine
+	li $t9, 30
 	j exp
 
 exp:
-	ble $t8, 1, merge
-	mul $t9, $t9, 32
+	ble $t8, 1, combine
+	mul $t9, $t9, 30 
 	addi $t8, $t8, -1
 	j exp
 
-merge:
+combine:
 	mul $s2, $t9, $s0
 	add $s1, $s1, $s2
+
 	li $t9, 1
+
 	j convert
 
-done: jr $ra
+done: jr $ra	
 
 finish:
+	
 	li $v0, 4
 	la $a0, output
 	syscall
@@ -155,19 +158,18 @@ finish:
 	
 	move $a0, $s1
 	syscall
-	j Exit	
 
-invalidInput:
-    #produces output
+	j Exit	
+	
+invalid:
 	li $v0, 4
 	la $a0, output
 	syscall
-
-    #prints "Invalid input"
+	
 	li $v0, 4
 	la $a0, notvalid
 	syscall
-    j Exit
+	j Exit
 
 Exit:
 	li $v0, 10
